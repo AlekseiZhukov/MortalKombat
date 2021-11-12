@@ -62,3 +62,4 @@ function createPlayer (objPlayer) {
 $arenas.appendChild(createPlayer(player1))
 $arenas.appendChild(createPlayer(player2))
 
+//dsofigs;drvhs;ogh
