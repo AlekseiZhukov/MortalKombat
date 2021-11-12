@@ -18,6 +18,8 @@ const kitana = {
     }
 }
 
+const $arenas = document.querySelector('.arenas');
+
 function createDivElement (element, classname) {
     const $elem = document.createElement(element);
     $elem.classList.add(classname);
@@ -25,9 +27,9 @@ function createDivElement (element, classname) {
 }
 
 
-function createPlayer (classname, obj) {
-    const $arenas = document.querySelector('.arenas');
-    $arenas.appendChild(createDivElement('div', classname));
+function createPlayer (elem, classname, obj) {
+    
+    elem.appendChild(createDivElement('div', classname));
 
     const $player = document.querySelector(`div.${classname}`);
     $player.appendChild(createDivElement('div',  `progressbar`));
@@ -48,5 +50,5 @@ function createPlayer (classname, obj) {
     document.querySelector(`div.${classname} div.character`).appendChild($img);
 
 }
-createPlayer('player1', scorpion)
-createPlayer('player2', kitana)
+createPlayer($arenas, 'player1', scorpion)
+createPlayer($arenas, 'player2', kitana)
