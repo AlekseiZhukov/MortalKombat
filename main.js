@@ -56,31 +56,42 @@ function createPlayer (objPlayer) {
 
 }
 
+function checkWinner () {
+
+    if (player1.hp === 0 && player2.hp !== 0) {
+        return player2.name
+    } else if (player2.hp === 0 && player1.hp !== 0)  {
+        return player1.name
+    }
+}
+
 function changeHP (player) {
+
     const $playerLife = document.querySelector(`.player${player.player} .life`);
     player.hp -= Math.ceil(Math.random() * 20);
 
     if (player.hp <= 0) {
         player.hp = 0;
+        $randomButton.disabled = true;
     } 
 
     $playerLife.style.width = player.hp + '%';
-        
-    console.log(player.hp);
 
     if (player.hp <= 0) {
-        $arenas.appendChild(playerLose(player.name)) ;
+        $arenas.appendChild(playerLose(checkWinner ())) ;
     }
 }
 
 function playerLose (name) {
     const $loseTitle = createElement('div', 'loseTitle');
-    $loseTitle.innerText = `${name} lose`;
+    $loseTitle.innerText = `${name} win!`;
     return $loseTitle
 }
 
+
+
 $randomButton.addEventListener('click', function () {
-    changeHP(player2);
+    changeHP(player1);
     
 });
 
