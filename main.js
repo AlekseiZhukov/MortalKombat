@@ -1,12 +1,18 @@
 const $arenas = document.querySelector('.arenas');
 const $randomButton = document.querySelector('.button');
 
+
 const player1 = {
     player: 1,
     name: 'Scorpion',
     hp: 100,
     img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
     weapon: ['sword', 'shuriken', 'spear'],
+
+    changeHP: changeHP,
+    elHP: elHP,
+    renderHP: renderHP,
+
     attack: function() {
         console.log(this.name + ', Fight...')
     }
@@ -18,6 +24,11 @@ const player2 = {
     hp: 100,
     img: 'http://reactmarathon-api.herokuapp.com/assets/kitana.gif',
     weapon: ['sword', 'spear'],
+
+    changeHP: changeHP,
+    elHP: elHP,
+    renderHP: renderHP,
+
     attack: function() {
         console.log(this.name + ', Fight...')
     }
@@ -62,9 +73,17 @@ function getRandomDamageHP (num) {
     return Math.ceil(Math.random() * num)
 }
 
-function changeHP (player) {
+function changeHP (num) {
+    
+    if (this.hp > 0) {
+        this.hp -= num;
+    } 
 
-    const $playerLife = document.querySelector(`.player${player.player} .life`);
+    if (this.hp <= 0) {
+        this.hp = 0;
+    }
+   
+    /*const $playerLife = document.querySelector(`.player${player.player} .life`);
 
     player.hp -= getRandomDamageHP(20);
         
@@ -72,7 +91,18 @@ function changeHP (player) {
         player.hp = 0;
     } 
     
-    $playerLife.style.width = player.hp + '%';
+    $playerLife.style.width = player.hp + '%';*/
+    
+}
+function elHP () {
+const $el = document.querySelector(`.player${this.player} .life`)
+return $el
+}
+
+function renderHP () {
+    
+    const $div = this.elHP();
+    $div.style.width = this.hp +'%'
     
 }
 
@@ -90,8 +120,14 @@ function showWiner (name) {
 
 
 $randomButton.addEventListener('click', function () {
-    changeHP(player1);
-    changeHP(player2);
+    //changeHP(player1);
+    //changeHP(player2);
+    player1.changeHP(getRandomDamageHP(20));
+    player1.renderHP();
+    player2.changeHP(getRandomDamageHP(20));
+    player2.renderHP();
+
+    
 
     if (player1.hp === 0 || player2.hp === 0) {
         $randomButton.disabled = true;
