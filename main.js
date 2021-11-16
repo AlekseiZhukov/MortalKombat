@@ -119,7 +119,7 @@ function showWiner (name) {
     return $loseTitle
 }
 
-function showButtomRestart () {
+function showButtonRestart () {
     $control.appendChild(createReloadButton())
     const $buttonRestart = document.querySelector(`.reloadWrap`, '.button');
     $buttonRestart.addEventListener('click', function () {
@@ -127,20 +127,25 @@ function showButtomRestart () {
         })
 }
 
-$randomButton.addEventListener('click', function () {
-    //changeHP(player1);
-    //changeHP(player2);
+function changeHpPlaers () {
     player1.changeHP(getRandomDamageHP(20));
     player1.renderHP();
     player2.changeHP(getRandomDamageHP(20));
     player2.renderHP();
+}
 
-    
+$randomButton.addEventListener('click', function () {
+    //changeHP(player1);
+    //changeHP(player2);
+    /*player1.changeHP(getRandomDamageHP(20));
+    player1.renderHP();
+    player2.changeHP(getRandomDamageHP(20));
+    player2.renderHP();*/
+    changeHpPlaers ()
 
     if (player1.hp === 0 || player2.hp === 0) {
         $randomButton.disabled = true;
-        showButtomRestart();
-
+        showButtonRestart();
     }
 
     if (player1.hp === 0 && player2.hp > player1.hp) {
