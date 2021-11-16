@@ -1,5 +1,6 @@
 const $arenas = document.querySelector('.arenas');
 const $randomButton = document.querySelector('.button');
+const $control = document.querySelector('.control');
 
 
 const player1 = {
@@ -68,6 +69,17 @@ function createPlayer (objPlayer) {
 
 }
 
+function createReloadButton () {
+    const $reloadWrap = createElement('div', 'reloadWrap');
+    const $buttonRestart = createElement('button', 'button');
+
+    $buttonRestart.innerText = 'Restart';
+
+    $reloadWrap.appendChild($buttonRestart);
+
+    return $reloadWrap;
+}
+
 
 function getRandomDamageHP (num) {
     return Math.ceil(Math.random() * num)
@@ -82,18 +94,8 @@ function changeHP (num) {
     if (this.hp <= 0) {
         this.hp = 0;
     }
-   
-    /*const $playerLife = document.querySelector(`.player${player.player} .life`);
-
-    player.hp -= getRandomDamageHP(20);
-        
-    if (player.hp <= 0) {
-        player.hp = 0;
-    } 
-    
-    $playerLife.style.width = player.hp + '%';*/
-    
 }
+
 function elHP () {
 const $el = document.querySelector(`.player${this.player} .life`)
 return $el
@@ -117,7 +119,13 @@ function showWiner (name) {
     return $loseTitle
 }
 
-
+function showButtomRestart () {
+    $control.appendChild(createReloadButton())
+    const $buttonRestart = document.querySelector(`.reloadWrap`, '.button');
+    $buttonRestart.addEventListener('click', function () {
+        window.location.reload()
+        })
+}
 
 $randomButton.addEventListener('click', function () {
     //changeHP(player1);
@@ -131,6 +139,8 @@ $randomButton.addEventListener('click', function () {
 
     if (player1.hp === 0 || player2.hp === 0) {
         $randomButton.disabled = true;
+        showButtomRestart();
+
     }
 
     if (player1.hp === 0 && player2.hp > player1.hp) {
