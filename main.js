@@ -13,10 +13,7 @@ const player1 = {
     changeHP: changeHP,
     elHP: elHP,
     renderHP: renderHP,
-
-    attack: function() {
-        console.log(this.name + ', Fight...')
-    }
+    attack: attack,
 }
 
 const player2 = {
@@ -29,11 +26,10 @@ const player2 = {
     changeHP: changeHP,
     elHP: elHP,
     renderHP: renderHP,
-
-    attack: function() {
-        console.log(this.name + ', Fight...')
-    }
+    attack: attack,
 }
+
+//вспомогательные функции-------------------------------------------------------------------
 
 function createElement (element, classname) {
     const $elem = document.createElement(element);
@@ -43,6 +39,16 @@ function createElement (element, classname) {
     
     return $elem;
 }
+
+function getRandomDamageHP (num) {
+
+    return Math.ceil(Math.random() * num)
+
+}
+
+//-------------------------------------------------------------------------------------------
+
+//функции создания элементов----------------------------------------------------------------
 
 function createPlayer (objPlayer) {
     
@@ -75,14 +81,24 @@ function createReloadButton () {
 
     $buttonRestart.innerText = 'Restart';
 
-    $reloadWrap.appendChild($buttonRestart);
+    $buttonRestart.addEventListener('click', function () {
+        window.location.reload()
+        });
 
-    return $reloadWrap;
+    $reloadWrap.appendChild($buttonRestart);
+    $arenas.appendChild($reloadWrap)
 }
 
+//------------------------------------------------------------------------------
 
-function getRandomDamageHP (num) {
-    return Math.ceil(Math.random() * num)
+
+
+//функции методов объектов-------------------------------------------------------
+
+function attack() {
+
+    console.log(this.name + ', Fight...')
+
 }
 
 function changeHP (num) {
@@ -97,8 +113,8 @@ function changeHP (num) {
 }
 
 function elHP () {
-const $el = document.querySelector(`.player${this.player} .life`)
-return $el
+    const $el = document.querySelector(`.player${this.player} .life`)
+    return $el
 }
 
 function renderHP () {
@@ -107,6 +123,7 @@ function renderHP () {
     $div.style.width = this.hp +'%'
     
 }
+//------------------------------------------------------------------------------------------
 
 function showWiner (name) {
     const $loseTitle = createElement('div', 'loseTitle');
@@ -119,33 +136,18 @@ function showWiner (name) {
     return $loseTitle
 }
 
-function showButtonRestart () {
-    $control.appendChild(createReloadButton())
-    const $buttonRestart = document.querySelector(`.reloadWrap`, '.button');
-    $buttonRestart.addEventListener('click', function () {
-        window.location.reload()
-        })
-}
-
-function changeHpPlaers () {
-    player1.changeHP(getRandomDamageHP(20));
-    player1.renderHP();
-    player2.changeHP(getRandomDamageHP(20));
-    player2.renderHP();
-}
 
 $randomButton.addEventListener('click', function () {
-    //changeHP(player1);
-    //changeHP(player2);
-    /*player1.changeHP(getRandomDamageHP(20));
+
+    player1.changeHP(getRandomDamageHP(20));
     player1.renderHP();
+    
     player2.changeHP(getRandomDamageHP(20));
-    player2.renderHP();*/
-    changeHpPlaers ()
+    player2.renderHP();
 
     if (player1.hp === 0 || player2.hp === 0) {
         $randomButton.disabled = true;
-        showButtonRestart();
+        createReloadButton();
     }
 
     if (player1.hp === 0 && player2.hp > player1.hp) {
