@@ -1,6 +1,14 @@
 const $arenas = document.querySelector('.arenas');
-const $randomButton = document.querySelector('.button');
-const $control = document.querySelector('.control');
+//const $randomButton = document.querySelector('.button');
+const $formFight = document.querySelector('.control')
+
+const HIT = {
+    head: 30,
+    body: 25,
+    foot: 20,
+}
+
+const ATTACK = ['head', 'body', 'foot'];
 
 
 const player1 = {
@@ -10,10 +18,10 @@ const player1 = {
     img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
     weapon: ['sword', 'shuriken', 'spear'],
 
-    changeHP: changeHP,
-    elHP: elHP,
-    renderHP: renderHP,
-    attack: attack,
+    changeHP,
+    elHP,
+    renderHP,
+    attack,
 }
 
 const player2 = {
@@ -23,10 +31,10 @@ const player2 = {
     img: 'http://reactmarathon-api.herokuapp.com/assets/kitana.gif',
     weapon: ['sword', 'spear'],
 
-    changeHP: changeHP,
-    elHP: elHP,
-    renderHP: renderHP,
-    attack: attack,
+    changeHP,
+    elHP,
+    renderHP,
+    attack,
 }
 
 //вспомогательные функции-------------------------------------------------------------------
@@ -40,7 +48,7 @@ function createElement (element, classname) {
     return $elem;
 }
 
-function getRandomDamageHP (num) {
+function getRandom (num) {
 
     return Math.ceil(Math.random() * num)
 
@@ -137,12 +145,12 @@ function showWiner (name) {
 }
 
 
-$randomButton.addEventListener('click', function () {
+/*$randomButton.addEventListener('click', function () {
 
-    player1.changeHP(getRandomDamageHP(20));
+    player1.changeHP(getRandom(20));
     player1.renderHP();
     
-    player2.changeHP(getRandomDamageHP(20));
+    player2.changeHP(getRandom(20));
     player2.renderHP();
 
     if (player1.hp === 0 || player2.hp === 0) {
@@ -160,8 +168,20 @@ $randomButton.addEventListener('click', function () {
     
     
 });
+*/
 
 
+$arenas.appendChild(createPlayer(player1));
+$arenas.appendChild(createPlayer(player2));
 
-$arenas.appendChild(createPlayer(player1))
-$arenas.appendChild(createPlayer(player2))
+function enemyAttack () {
+    const hit = ATTACK[getRandom(3) - 1];
+    const defence = ATTACK[getRandom(3) - 1];
+    console.log('hit', hit);
+    console.log('defence', defence)
+}
+
+$formFight.addEventListener('click', function (e) {
+    e.preventDefault();
+    enemyAttack ()
+})
