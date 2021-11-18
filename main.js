@@ -1,5 +1,4 @@
 const $arenas = document.querySelector('.arenas');
-//const $randomButton = document.querySelector('.button');
 const $formFight = document.querySelector('.control')
 
 const HIT = {
@@ -90,19 +89,14 @@ function createReloadButton () {
     $buttonRestart.innerText = 'Restart';
 
     $buttonRestart.addEventListener('click', function () {
-         for (let item of $formFight) {
-            item.checked = false;
-         }
         window.location.reload()
-        });
+    });
 
     $reloadWrap.appendChild($buttonRestart);
     $arenas.appendChild($reloadWrap)
 }
 
 //------------------------------------------------------------------------------
-
-
 
 //функции методов объектов-------------------------------------------------------
 
@@ -124,8 +118,9 @@ function changeHP (num) {
 }
 
 function elHP () {
-    const $el = document.querySelector(`.player${this.player} .life`)
-    return $el
+
+    return document.querySelector(`.player${this.player} .life`)
+
 }
 
 function renderHP () {
@@ -136,7 +131,7 @@ function renderHP () {
 }
 //------------------------------------------------------------------------------------------
 
-function showWiner (name) {
+function showWinner (name) {
     const $loseTitle = createElement('div', 'loseTitle');
     if (!name) {
         $loseTitle.innerText = `draw!`; 
@@ -146,33 +141,6 @@ function showWiner (name) {
     
     return $loseTitle
 }
-
-
-/*$randomButton.addEventListener('click', function () {
-
-    player1.changeHP(getRandom(20));
-    player1.renderHP();
-    
-    player2.changeHP(getRandom(20));
-    player2.renderHP();
-
-    if (player1.hp === 0 || player2.hp === 0) {
-        $randomButton.disabled = true;
-        createReloadButton();
-    }
-
-    if (player1.hp === 0 && player2.hp > player1.hp) {
-        $arenas.appendChild(showWiner(player2.name));
-    } else if (player2.hp === 0 && player1.hp > player2.hp)  {
-        $arenas.appendChild(showWiner(player1.name));
-    } else if (player2.hp === 0 && player1.hp === 0){
-        $arenas.appendChild(showWiner());
-    }
-    
-    
-});
-*/
-
 
 $arenas.appendChild(createPlayer(player1));
 $arenas.appendChild(createPlayer(player2));
@@ -214,24 +182,6 @@ $formFight.addEventListener('submit', function (e) {
 
     const enemy = enemyAttack();
     const attack = playerAttack();
-    
-    /*const attack = {};
-
-    for (let item of $formFight) {
-
-        if (item.checked && item.name === 'hit') {
-            attack.value = getRandom(HIT[item.value]);
-            attack.hit = item.value;
-        }
-
-        if (item.checked && item.name === 'defence') {
-            attack.defence = item.value;
-        }
-
-        item.checked = false;
-
-    }*/
-    
 
     if(enemy.hit !== attack.defence){
         player1.changeHP(enemy.value);
@@ -248,10 +198,10 @@ $formFight.addEventListener('submit', function (e) {
     }
 
     if (player1.hp === 0 && player2.hp > player1.hp) {
-        $arenas.appendChild(showWiner(player2.name));
+        $arenas.appendChild(showWinner(player2.name));
     } else if (player2.hp === 0 && player1.hp > player2.hp)  {
-        $arenas.appendChild(showWiner(player1.name));
+        $arenas.appendChild(showWinner(player1.name));
     } else if (player2.hp === 0 && player1.hp === 0){
-        $arenas.appendChild(showWiner());
+        $arenas.appendChild(showWinner());
     }
 })
