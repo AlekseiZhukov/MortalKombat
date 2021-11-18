@@ -90,6 +90,9 @@ function createReloadButton () {
     $buttonRestart.innerText = 'Restart';
 
     $buttonRestart.addEventListener('click', function () {
+         for (let item of $formFight) {
+            item.checked = false;
+         }
         window.location.reload()
         });
 
@@ -177,11 +180,78 @@ $arenas.appendChild(createPlayer(player2));
 function enemyAttack () {
     const hit = ATTACK[getRandom(3) - 1];
     const defence = ATTACK[getRandom(3) - 1];
-    console.log('hit', hit);
-    console.log('defence', defence)
+    
+    return {
+        value: getRandom(HIT[hit]),
+        hit,
+        defence,
+    }
 }
 
-$formFight.addEventListener('click', function (e) {
+function playerAttack () {
+
+    const attack = {};
+
+    for (let item of $formFight) {
+
+        if (item.checked && item.name === 'hit') {
+            attack.value = getRandom(HIT[item.value]);
+            attack.hit = item.value;
+        }
+
+        if (item.checked && item.name === 'defence') {
+            attack.defence = item.value;
+        }
+
+        item.checked = false;
+
+    }
+    return attack
+}
+
+$formFight.addEventListener('submit', function (e) {
     e.preventDefault();
-    enemyAttack ()
+
+    const enemy = enemyAttack();
+    const attack = playerAttack();
+    
+    /*const attack = {};
+
+    for (let item of $formFight) {
+
+        if (item.checked && item.name === 'hit') {
+            attack.value = getRandom(HIT[item.value]);
+            attack.hit = item.value;
+        }
+
+        if (item.checked && item.name === 'defence') {
+            attack.defence = item.value;
+        }
+
+        item.checked = false;
+
+    }*/
+    
+
+    if(enemy.hit !== attack.defence){
+        player1.changeHP(enemy.value);
+        player1.renderHP();
+    }
+    if(attack.hit !== enemy.defence) {
+        player2.changeHP(attack.value);
+        player2.renderHP();
+    }
+
+    if (player1.hp === 0 || player2.hp === 0) {
+        $formFight.querySelector('.button').disabled = true;
+        createReloadButton();
+    }
+
+    if (player1.hp === 0 && player2.hp > player1.hp) {
+        $arenas.appendChild(showWiner(player2.name));
+    } else if (player2.hp === 0 && player1.hp > player2.hp)  {
+        $arenas.appendChild(showWiner(player1.name));
+    } else if (player2.hp === 0 && player1.hp === 0){
+        $arenas.appendChild(showWiner());
+    }
 })
