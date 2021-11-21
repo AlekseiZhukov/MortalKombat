@@ -241,9 +241,10 @@ function generateLogs (type, player1, player2, forceBlow=null) {
     let text = '';
     let el = '';
     const date = new Date();
+    const normalize = (num) => (num.toString().length > 1 ? num : `0${num}`);
     switch (type) {
         case 'start':
-            text = logs['start'].replace('[time]', `${date.getHours()}:${date.getMinutes()}`)
+            text = logs['start'].replace('[time]', `${normalize(date.getHours())}:${normalize(date.getMinutes())}`)
                 .replace('[player1]', (player1.name).toUpperCase())
                 .replace('[player2]', (player2.name).toUpperCase());
             el =`<p>${text}</p>`;
@@ -253,14 +254,14 @@ function generateLogs (type, player1, player2, forceBlow=null) {
             text = logs['hit'][getRandom(logs['hit'].length-1)]
                 .replace('[playerKick]', (player1.name).toUpperCase())
                 .replace('[playerDefence]', (player2.name).toUpperCase());
-            el =`<p>${date.getHours()}:${date.getMinutes()} - ${text} -${forceBlow} [${player2.hp}/100]</p>`;
+            el =`<p>${normalize(date.getHours())}:${normalize(date.getMinutes())} - ${text} -${forceBlow} [${player2.hp}/100]</p>`;
             break
 
         case 'defence':
             text = logs['defence'][getRandom(logs['defence'].length-1)]
                 .replace('[playerKick]', (player2.name).toUpperCase())
                 .replace('[playerDefence]', (player1.name).toUpperCase());
-            el =`<p>${date.getHours()}:${date.getMinutes()} - ${text} </p>`;
+            el =`<p>${normalize(date.getHours())}:${normalize(date.getMinutes())} - ${text} </p>`;
             break
 
         case 'end':
