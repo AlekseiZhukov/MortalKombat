@@ -1,7 +1,6 @@
 const $arenas = document.querySelector('.arenas');
 const $formFight = document.querySelector('.control');
 
-import { getRandom } from './utils.js';
 import createPlayer from './create_player.js';
 import {player1, player2} from './players.js'
 import {enemyAttack, playerAttack} from './attakFunktions.js'
@@ -55,24 +54,21 @@ generateLogs('start', player1, player2);
 $formFight.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const {renderHP: renderHpPlayer1, changeHP: changeHpPlayer1} = player1; //мне вот так не нравится потому что приходится привязывать контекст
-    const {renderHP: renderHpPlayer2, changeHP: changeHpPlayer2} = player2;
+    const {hit: enemyHit, value: enemyHitValue, defence: enemyDefence} = enemyAttack();
+    const {hit: playerHit, value: playerHitValue, defence: playerDefence} = playerAttack();
 
-    const {hit: enemyHit, value: enemyHitValue, defence: enemyDefance} = enemyAttack();
-    const {hit: playerHit, value: playerHitValue, defence: playerDefance} = playerAttack();
-
-    if(enemyHit !== playerDefance){
-        changeHpPlayer1.call(player1, enemyHitValue); //вот привязываю контекст, но мне так не нравится
-        renderHpPlayer1.call(player1);
+    if(enemyHit !== playerDefence){
+        player1.changeHP( enemyHitValue);
+        player1.renderHP();
         generateLogs ('hit', player2, player1, enemyHitValue)
 
     } else {
         generateLogs ('defence', player1, player2)
     }
 
-    if(playerHit !== enemyDefance) {
-        changeHpPlayer2.call(player2, playerHitValue);
-        renderHpPlayer2.call(player2);
+    if(playerHit !== enemyDefence) {
+        player2.changeHP(playerHitValue);
+        player2.renderHP();
         generateLogs ('hit', player1, player2, playerHitValue)
 
     } else {
