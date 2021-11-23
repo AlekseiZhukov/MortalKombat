@@ -30,21 +30,29 @@ const showWinner = (name) => {
     return $loseTitle
 }
 
-export function showResult(player1, player2) {
+const showResult = (player1, player2) => {
 
-    if (player1.hp === 0 || player2.hp === 0) {
+    const {name: namePlayer1, hp: hpPlayer1} = player1;
+    const {name: namePlayer2, hp: hpPlayer2} = player2;
+
+    if (hpPlayer1 === 0 || hpPlayer2 === 0) {
         $formFight.querySelector('.button').disabled = true;
         createReloadButton();
 
     }
 
-    if (player1.hp === 0 && player2.hp > player1.hp) {
-        $arenas.appendChild(showWinner(player2.name));
+    if (hpPlayer1 === 0 && hpPlayer2 > hpPlayer1) {
+
+        $arenas.appendChild(showWinner(namePlayer2));
         generateLogs ('end', player2, player1)
-    } else if (player2.hp === 0 && player1.hp > player2.hp)  {
-        $arenas.appendChild(showWinner(player1.name));
+
+    } else if (hpPlayer2 === 0 && hpPlayer1 > hpPlayer2)  {
+
+        $arenas.appendChild(showWinner(namePlayer1));
         generateLogs ('end', player1, player2)
-    } else if (player2.hp === 0 && player1.hp === 0){
+
+    } else if (hpPlayer2 === 0 && hpPlayer1 === 0){
+        
         $arenas.appendChild(showWinner());
         generateLogs ('draw', player1, player2)
     }

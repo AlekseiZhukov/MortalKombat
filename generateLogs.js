@@ -1,9 +1,11 @@
 const $chat = document.querySelector('.chat');
 
-import {getRandom, normalize} from './utils.js'
-import {logs} from './main.js'
+import {getRandom} from './utils.js';
+import {logs} from './main.js';
 
-export function generateLogs (type, player1, player2, forceBlow=null) {
+const normalize = (num) => (num.toString().length > 1 ? num : `0${num}`);
+
+const generateLogs = (type, {name: namePlayer1}, {name: namePlayer2, hp}, forceBlow=null) => {
     let text = '';
     let el = '';
     const date = new Date();
@@ -11,29 +13,29 @@ export function generateLogs (type, player1, player2, forceBlow=null) {
     switch (type) {
         case 'start':
             text = logs['start'].replace('[time]', `${normalize(date.getHours())}:${normalize(date.getMinutes())}`)
-                .replace('[player1]', (player1.name).toUpperCase())
-                .replace('[player2]', (player2.name).toUpperCase());
+                .replace('[player1]', (namePlayer1).toUpperCase())
+                .replace('[player2]', (namePlayer2).toUpperCase());
             el =`<p>${text}</p>`;
             break
 
         case 'hit':
             text = logs['hit'][getRandom(logs['hit'].length-1)]
-                .replace('[playerKick]', (player1.name).toUpperCase())
-                .replace('[playerDefence]', (player2.name).toUpperCase());
-            el =`<p>${normalize(date.getHours())}:${normalize(date.getMinutes())} - ${text} -${forceBlow} [${player2.hp}/100]</p>`;
+                .replace('[playerKick]', (namePlayer1).toUpperCase())
+                .replace('[playerDefence]', (namePlayer2).toUpperCase());
+            el =`<p>${normalize(date.getHours())}:${normalize(date.getMinutes())} - ${text} -${forceBlow} [${hp}/100]</p>`;
             break
 
         case 'defence':
             text = logs['defence'][getRandom(logs['defence'].length-1)]
-                .replace('[playerKick]', (player2.name).toUpperCase())
-                .replace('[playerDefence]', (player1.name).toUpperCase());
+                .replace('[playerKick]', (namePlayer2).toUpperCase())
+                .replace('[playerDefence]', (namePlayer1).toUpperCase());
             el =`<p>${normalize(date.getHours())}:${normalize(date.getMinutes())} - ${text} </p>`;
             break
 
         case 'end':
             text = logs['end'][getRandom(logs['end'].length-1)]
-                .replace('[playerWins]', (player1.name).toUpperCase())
-                .replace('[playerLose]', (player2.name).toUpperCase());
+                .replace('[playerWins]', (namePlayer1).toUpperCase())
+                .replace('[playerLose]', (namePlayer2).toUpperCase());
             el =`<p>${text}</p>`;
             break
 
@@ -50,4 +52,4 @@ export function generateLogs (type, player1, player2, forceBlow=null) {
     $chat.insertAdjacentHTML('afterbegin', el);
 }
 
-export default generateLogs
+export default generateLogs;

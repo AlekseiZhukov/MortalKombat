@@ -11,4 +11,3 @@ export const  createElement = (element, classname) => {
     return $elem;
 }
 
-export const normalize = (num) => (num.toString().length > 1 ? num : `0${num}`);

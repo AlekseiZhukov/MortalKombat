@@ -55,21 +55,26 @@ generateLogs('start', player1, player2);
 $formFight.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const enemy = enemyAttack();
-    const player = playerAttack();
+    const {renderHP: renderHpPlayer1, changeHP: changeHpPlayer1} = player1; //мне вот так не нравится потому что приходится привязывать контекст
+    const {renderHP: renderHpPlayer2, changeHP: changeHpPlayer2} = player2;
 
-    if(enemy.hit !== player.defence){
-        player1.changeHP(enemy.value);
-        player1.renderHP();
-        generateLogs ('hit', player2, player1, enemy.value)
+    const {hit: enemyHit, value: enemyHitValue, defence: enemyDefance} = enemyAttack();
+    const {hit: playerHit, value: playerHitValue, defence: playerDefance} = playerAttack();
+
+    if(enemyHit !== playerDefance){
+        changeHpPlayer1.call(player1, enemyHitValue); //вот привязываю контекст, но мне так не нравится
+        renderHpPlayer1.call(player1);
+        generateLogs ('hit', player2, player1, enemyHitValue)
+
     } else {
         generateLogs ('defence', player1, player2)
     }
 
-    if(player.hit !== enemy.defence) {
-        player2.changeHP(player.value);
-        player2.renderHP();
-        generateLogs ('hit', player1, player2, player.value)
+    if(playerHit !== enemyDefance) {
+        changeHpPlayer2.call(player2, playerHitValue);
+        renderHpPlayer2.call(player2);
+        generateLogs ('hit', player1, player2, playerHitValue)
+
     } else {
         generateLogs ('defence', player2, player1)
     }
