@@ -3,9 +3,10 @@ const $chat = document.querySelector('.chat');
 import {getRandom} from './utils.js';
 import {logs} from './main.js';
 
-const normalize = (num) => (num.toString().length > 1 ? num : `0${num}`);
+
 
 const generateLogs = (type, {name: namePlayer1}, {name: namePlayer2, hp}, forceBlow=null) => {
+    const normalize = (num) => (num.toString().length > 1 ? num : `0${num}`);
     let text = '';
     let el = '';
     const date = new Date();

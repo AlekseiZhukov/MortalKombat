@@ -1,16 +1,4 @@
-const $arenas = document.querySelector('.arenas');
-const $formFight = document.querySelector('.control');
-
-import createPlayer from './create_player.js';
-//import {player1, player2} from './players.js';
-
-import Player from './classPlayer.js';
 import Game from './classGame.js';
-
-import {enemyAttack, playerAttack} from './attakFunktions.js';
-import generateLogs from './generateLogs.js';
-import showResult from './showResult.js';
-
 export const logs = {
     start: 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',
     end: [
@@ -50,15 +38,33 @@ export const logs = {
     ],
     draw: 'Ничья - это тоже победа!'
 };
-
-const player1 = new Player({player: 1, name: 'Scorpion', img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif'});
-const player2 = new Player({player: 2, name: 'Kitana', img: 'http://reactmarathon-api.herokuapp.com/assets/kitana.gif'});
 const game = new Game();
-console.log(game.start())
-$arenas.appendChild(createPlayer(player1));
-$arenas.appendChild(createPlayer(player2));
-generateLogs('start', player1, player2);
+game.start()
+//const $arenas = document.querySelector('.arenas');
+//const $formFight = document.querySelector('.control');
 
+//import createPlayer from './create_player.js';
+//import {player1, player2} from './players.js';
+
+//import Player from './classPlayer.js';
+
+
+//import {enemyAttack, playerAttack} from './attakFunktions.js';
+//import generateLogs from './generateLogs.js';
+//import showResult from './showResult.js';
+
+
+
+//const player1 = new Player({player: 1, name: 'Scorpion', img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif'});
+//const player2 = new Player({player: 2, name: 'Kitana', img: 'http://reactmarathon-api.herokuapp.com/assets/kitana.gif'});
+
+
+//console.log(game.start())
+//$arenas.appendChild(createPlayer(player1));
+//$arenas.appendChild(createPlayer(player2));
+//generateLogs('start', player1, player2);
+
+/*
 $formFight.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -85,4 +91,4 @@ $formFight.addEventListener('submit', function (e) {
 
     showResult(player1, player2);
 
-})
+})*/
