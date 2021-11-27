@@ -18,7 +18,8 @@ export class Result {
         $buttonRestart.innerText = 'Restart';
 
         $buttonRestart.addEventListener('click', function () {
-            window.location.reload()
+            //window.location.reload()
+            window.location.pathname = 'MortalKombat/index.html'
         });
 
         $reloadWrap.appendChild($buttonRestart);

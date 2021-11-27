@@ -3,7 +3,7 @@ const $formFight = document.querySelector('.control')
 const $arenas = document.querySelector('.arenas');
 
 import generateLogs from './generateLogs.js'
-import {createElement} from './utils.js'
+import {createElement} from '../utils.js'
 
 const createReloadButton = () => {
     const $reloadWrap = createElement('div', 'reloadWrap');

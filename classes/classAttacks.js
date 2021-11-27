@@ -1,16 +1,14 @@
+import Api from "./api.js";
 
 export class Attacks  {
-    constructor ({HIT, ATTACK, $formFight}) {
-        this.HIT = HIT
-        this.ATTACK = ATTACK
+    constructor ({$formFight}) {
         this.$formFight = $formFight
-        this.enemyAttackData = {}
-        this.playerAttackData = {}
+        this.api = new Api()
     }
 
-    getRandom = (num) => Math.ceil(Math.random() * num);
+    //getRandom = (num) => Math.ceil(Math.random() * num);
 
-    enemyAttack = () => {
+    /*enemyAttack = () => {
         const hit = this.ATTACK[this.getRandom(this.ATTACK.length) - 1];
         const defence = this.ATTACK[this.getRandom(this.ATTACK.length) - 1];
         this.enemyAttackData.value = this.getRandom(this.HIT[hit]);
@@ -18,24 +16,30 @@ export class Attacks  {
         this.enemyAttackData.defence = defence;
         return this.enemyAttackData
 
-    }
+    }*/
 
     playerAttack = () => {
 
+        const playerHit = {}
         for (let item of this.$formFight) {
 
             if (item.checked && item.name === 'hit') {
-                this.playerAttackData.value = this.getRandom(this.HIT[item.value]);
-                this.playerAttackData.hit = item.value;
+                playerHit.hit = item.value;
             }
 
             if (item.checked && item.name === 'defence') {
-                this.playerAttackData.defence = item.value;
+                playerHit.defence = item.value;
             }
 
             item.checked = false;
         }
-        return this.playerAttackData
+
+        return playerHit
+
+    }
+
+    attack = async () => {
+        return await this.api.postHitPlayers(this.playerAttack())
 
     }
 
