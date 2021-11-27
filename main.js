@@ -1,11 +1,7 @@
 const $arenas = document.querySelector('.arenas');
 const $formFight = document.querySelector('.control');
-
-import createPlayer from './create_player.js';
-import {player1, player2} from './players.js'
-import {enemyAttack, playerAttack} from './attakFunktions.js'
-import generateLogs from './generateLogs.js'
-import showResult from './showResult.js'
+const $chat = document.querySelector('.chat');
+import Game from './classes/classGame.js';
 
 export const logs = {
     start: 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',
@@ -47,34 +43,7 @@ export const logs = {
     draw: 'Ничья - это тоже победа!'
 };
 
-$arenas.appendChild(createPlayer(player1));
-$arenas.appendChild(createPlayer(player2));
-generateLogs('start', player1, player2);
+const game = new Game({$arenas, $formFight, $chat});
+game.start()
 
-$formFight.addEventListener('submit', function (e) {
-    e.preventDefault();
 
-    const {hit: enemyHit, value: enemyHitValue, defence: enemyDefence} = enemyAttack();
-    const {hit: playerHit, value: playerHitValue, defence: playerDefence} = playerAttack();
-
-    if(enemyHit !== playerDefence){
-        player1.changeHP( enemyHitValue);
-        player1.renderHP();
-        generateLogs ('hit', player2, player1, enemyHitValue)
-
-    } else {
-        generateLogs ('defence', player1, player2)
-    }
-
-    if(playerHit !== enemyDefence) {
-        player2.changeHP(playerHitValue);
-        player2.renderHP();
-        generateLogs ('hit', player1, player2, playerHitValue)
-
-    } else {
-        generateLogs ('defence', player2, player1)
-    }
-
-    showResult(player1, player2);
-
-})

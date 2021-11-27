@@ -1,3 +1,4 @@
+
 const $formFight = document.querySelector('.control')
 const $arenas = document.querySelector('.arenas');
 
@@ -43,17 +44,17 @@ const showResult = (player1, player2) => {
     if (hpPlayer1 === 0 && hpPlayer2 > hpPlayer1) {
 
         $arenas.appendChild(showWinner(namePlayer2));
-        generateLogs ('end', player2, player1)
+        generateLogs('end', player2, player1)
 
-    } else if (hpPlayer2 === 0 && hpPlayer1 > hpPlayer2)  {
+    } else if (hpPlayer2 === 0 && hpPlayer1 > hpPlayer2) {
 
         $arenas.appendChild(showWinner(namePlayer1));
-        generateLogs ('end', player1, player2)
+        generateLogs('end', player1, player2)
 
-    } else if (hpPlayer2 === 0 && hpPlayer1 === 0){
-        
+    } else if (hpPlayer2 === 0 && hpPlayer1 === 0) {
+
         $arenas.appendChild(showWinner());
-        generateLogs ('draw', player1, player2)
+        generateLogs('draw', player1, player2)
     }
 }
 
