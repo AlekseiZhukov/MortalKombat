@@ -46,4 +46,4 @@ export const logs = {
 const game = new Game({$arenas, $formFight, $chat});
 game.start()
 
-
+ndndgn
