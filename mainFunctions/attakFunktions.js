@@ -1,7 +1,7 @@
 const $formFight = document.querySelector('.control');
 
-import {HIT, ATTACK} from './data.js'
-import {getRandom} from './utils.js'
+import {HIT, ATTACK} from '../data.js'
+import {getRandom} from '../utils.js'
 
 export const enemyAttack = () => {
     const hit = ATTACK[getRandom(3) - 1];

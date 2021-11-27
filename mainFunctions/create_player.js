@@ -1,4 +1,4 @@
-import {createElement} from './utils.js';
+import {createElement} from '../utils.js';
 
 
 const createPlayer = ({player, hp, name, img}) => {
